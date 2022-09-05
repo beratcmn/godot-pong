@@ -1,13 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Opponent/Opponent.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Ball/Ball.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Level/GameManager.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 640, 10 )
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 360 )
+
 [node name="Level" type="Node"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource( 4 )
 
 [node name="Environment" type="Node" parent="."]
 
@@ -29,6 +36,24 @@ shape = SubResource( 1 )
 position = Vector2( 640, -10 )
 shape = SubResource( 1 )
 
+[node name="BallBoundary_Left" type="Area2D" parent="Environment"]
+position = Vector2( -11, 360 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/BallBoundary_Left"]
+shape = SubResource( 2 )
+
+[node name="BallBoundary_Right" type="Area2D" parent="Environment"]
+position = Vector2( 1291, 360 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/BallBoundary_Right"]
+shape = SubResource( 2 )
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 50, 360 )
 
@@ -38,3 +63,6 @@ position = Vector2( 1230, 360 )
 [node name="Ball" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
 position = Vector2( 640, 360 )
+
+[connection signal="body_entered" from="Environment/BallBoundary_Left" to="GameManager" method="_on_BallBoundary_Left_body_entered"]
+[connection signal="body_entered" from="Environment/BallBoundary_Right" to="GameManager" method="_on_BallBoundary_Right_body_entered"]

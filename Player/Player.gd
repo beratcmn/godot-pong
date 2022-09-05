@@ -10,6 +10,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+
 func _physics_process(delta: float) -> void:
 	var velocity: Vector2 = Vector2.ZERO
 	if Input.is_action_pressed("ui_up"):
