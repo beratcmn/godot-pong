@@ -1,33 +1,39 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Opponent/Opponent.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Ball/Ball.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 640, 10 )
 
 [node name="Level" type="Node"]
 
-[node name="World" type="Node" parent="."]
+[node name="Environment" type="Node" parent="."]
 
-[node name="Background" type="ColorRect" parent="World"]
+[node name="Background" type="ColorRect" parent="Environment"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
 
-[node name="Walls" type="StaticBody2D" parent="World"]
+[node name="Walls" type="StaticBody2D" parent="Environment"]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="WallTop" type="CollisionShape2D" parent="World/Walls"]
+[node name="WallTop" type="CollisionShape2D" parent="Environment/Walls"]
 position = Vector2( 640, 730 )
 shape = SubResource( 1 )
 
-[node name="WallBottom" type="CollisionShape2D" parent="World/Walls"]
+[node name="WallBottom" type="CollisionShape2D" parent="Environment/Walls"]
 position = Vector2( 640, -10 )
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 50, 360 )
 
 [node name="Opponent" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1230, 360 )
+
+[node name="Ball" parent="." instance=ExtResource( 3 )]
+position = Vector2( 640, 360 )
