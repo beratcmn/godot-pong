@@ -3,9 +3,6 @@ extends Node
 var PlayerScore: int = 0
 var OpponentScore: int = 0
 
-func ResetBall():
-	$"%Ball".position = Vector2(640, 360)
-	$"%Ball".AdjustStartVelocity()
 
 func _process(delta: float) -> void:
 	$"%Score".text = str(PlayerScore) + " : " + str(OpponentScore)
@@ -15,11 +12,20 @@ func _process(delta: float) -> void:
 		OpponentScore = 0
 		ResetBall()
 
+func ResetBall():
+	$"%Ball".position = Vector2(640, 360)
+	$"%Ball".AdjustStartVelocity()
+
+func PlayScoreSound():
+	$"%ScoreSound".play()
+
 func _on_BallBoundary_Left_body_entered(body: Node) -> void:
 	ResetBall()
 	OpponentScore += 1
+	PlayScoreSound()
 
 
 func _on_BallBoundary_Right_body_entered(body: Node) -> void:
 	ResetBall()
 	PlayerScore += 1
+	PlayScoreSound()	
