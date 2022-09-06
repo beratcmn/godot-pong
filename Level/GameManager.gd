@@ -12,6 +12,11 @@ func _process(delta: float) -> void:
 		OpponentScore = 0
 		ResetBall()
 
+func _physics_process(delta: float) -> void:
+	# this part makes sure that player and opponents x position stays the same
+	$"../Player".position.x = 50
+	$"../Opponent".position.x =  1280 - 50
+
 func ResetBall():
 	$"%Ball".position = Vector2(640, 360)
 	$"%Ball".AdjustStartVelocity()
@@ -19,13 +24,15 @@ func ResetBall():
 func PlayScoreSound():
 	$"%ScoreSound".play()
 
-func _on_BallBoundary_Left_body_entered(body: Node) -> void:
+func ScoreAchieved():
 	ResetBall()
-	OpponentScore += 1
 	PlayScoreSound()
+	
 
+func _on_BallBoundary_Left_body_entered(body: Node) -> void:
+	OpponentScore += 1
+	ScoreAchieved()
 
 func _on_BallBoundary_Right_body_entered(body: Node) -> void:
-	ResetBall()
 	PlayerScore += 1
-	PlayScoreSound()	
+	ScoreAchieved()
